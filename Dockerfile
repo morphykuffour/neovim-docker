@@ -1,10 +1,11 @@
 FROM alpine:3.13 AS builder
 
-LABEL maintainer="AnatoleLucet"
+LABEL maintainer="morp"
 
 ARG BUILD_DEPS="autoconf automake cmake curl g++ gettext gettext-dev git libtool make ninja openssl pkgconfig unzip binutils"
-ARG TARGET=stable
+ARG TARGET=nightly
 
+# build neovim nightly
 RUN apk add --no-cache ${BUILD_DEPS} && \
   git clone https://github.com/neovim/neovim.git /tmp/neovim && \
   cd /tmp/neovim && \
@@ -13,6 +14,10 @@ RUN apk add --no-cache ${BUILD_DEPS} && \
   make CMAKE_BUILD_TYPE=Release && \
   make CMAKE_INSTALL_PREFIX=/usr/local install && \
   strip /usr/local/bin/nvim
+
+# install packer.nvim
+RUN git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
+
 
 FROM alpine:3.13
 COPY --from=builder /usr/local /usr/local/
