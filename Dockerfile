@@ -26,7 +26,7 @@ RUN apk add --no-cache ${BUILD_DEPS} && \
   make CMAKE_BUILD_TYPE=Release && \
   make CMAKE_INSTALL_PREFIX=/usr/local install && \
   strip /usr/local/bin/nvim \
-  chown -R ${UNAME}:${GNAME} /home/neovim/.local \
+  chown -R ${UNAME}:${GNAME} /home/neovim/.local
 
 # install packer.nvim
 RUN git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
