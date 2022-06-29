@@ -43,4 +43,7 @@ COPY --from=builder /usr/lib/libgcc_s.so.1 /usr/lib/
 RUN true
 COPY --from=builder /usr/lib/libintl.so.8 /usr/lib/
 
+VOLUME "${WORKSPACE}"
+VOLUME "${NVIM_CONFIG}"
+
 CMD ["/usr/local/bin/nvim"]
