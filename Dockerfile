@@ -17,7 +17,6 @@ ENV \
 ARG BUILD_DEPS="autoconf automake cmake curl g++ gettext gettext-dev git libtool make ninja openssl pkgconfig unzip binutils"
 ARG TARGET=nightly
 
-RUN chown -R ${UNAME}:${GNAME} /home/neovim/.local
 
 # build neovim nightly
 RUN apk add --no-cache ${BUILD_DEPS} && \
@@ -43,7 +42,5 @@ COPY --from=builder /usr/lib/libgcc_s.so.1 /usr/lib/
 RUN true
 COPY --from=builder /usr/lib/libintl.so.8 /usr/lib/
 
-VOLUME "${WORKSPACE}"
-VOLUME "${NVIM_CONFIG}"
 
 CMD ["/usr/local/bin/nvim"]
